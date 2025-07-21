@@ -121,13 +121,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/users/{{invalidFormatUserId}}",
+											"raw": "{{url}}/users/{{invalidFormatId}}",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"users",
-												"{{invalidFormatUserId}}"
+												"{{invalidFormatId}}"
 											]
 										}
 									},
@@ -237,13 +237,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/users/-12",
+											"raw": "{{url}}/users/{{negativeId}}",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"users",
-												"-12"
+												"{{negativeId}}"
 											]
 										}
 									},
@@ -383,9 +383,7 @@
 										"type": "text/javascript",
 										"packages": {},
 										"exec": [
-											"pm.test(\"Status code is 404\", () => {\r",
-											"    pm.response.to.have.status(404);\r",
-											"});"
+											""
 										]
 									}
 								}
@@ -476,9 +474,7 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pm.test(\"Status code is 404\", () => {\r",
-													"    pm.response.to.have.status(404);\r",
-													"});"
+													""
 												],
 												"type": "text/javascript",
 												"packages": {}
@@ -507,7 +503,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/todos/?userId={{invalidFormatUserId}}",
+											"raw": "{{url}}/todos/?userId={{invalidFormatId}}",
 											"host": [
 												"{{url}}"
 											],
@@ -518,7 +514,7 @@
 											"query": [
 												{
 													"key": "userId",
-													"value": "{{invalidFormatUserId}}"
+													"value": "{{invalidFormatId}}"
 												}
 											]
 										}
@@ -635,7 +631,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/todos/?userId=-30",
+											"raw": "{{url}}/todos/?userId={{negativeId}}",
 											"host": [
 												"{{url}}"
 											],
@@ -646,7 +642,7 @@
 											"query": [
 												{
 													"key": "userId",
-													"value": "-30"
+													"value": "{{negativeId}}"
 												}
 											]
 										}
@@ -799,11 +795,326 @@
 										"type": "text/javascript",
 										"packages": {},
 										"exec": [
-											"pm.test(\"Status code is 404\", () => {\r",
-											"    pm.response.to.have.status(404);\r",
-											"});"
+											""
 										]
 									}
+								}
+							]
+						},
+						{
+							"name": "Specific todos by todos ID",
+							"item": [
+								{
+									"name": "Non-existing ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{nonExistingTodoId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{nonExistingTodoId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid ID format",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{invalidFormatId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{invalidFormatId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ID is zero",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/0",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"0"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{negativeId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{negativeId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Out of scope ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/999999999999999999999999999999999999999999999999999999",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"999999999999999999999999999999999999999999999999999999"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SQL Injection",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{todoId}}; DROP TABLE users;",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{todoId}}; DROP TABLE users;"
+											]
+										}
+									},
+									"response": []
 								}
 							]
 						}
@@ -825,7 +1136,9 @@
 								"type": "text/javascript",
 								"packages": {},
 								"exec": [
-									""
+									"pm.test(\"Status code is 404\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
 								]
 							}
 						}
@@ -2192,9 +2505,18 @@
 					"\r",
 					"// String randomizer function\r",
 					"function getRandomString(length) {\r",
-					"    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+					"    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$^&*()_+-=[]{}|;:,.<>?';\r",
 					"    return Array.from({length}, () => chars[Math.floor(Math.random() * chars.length)]).join('');\r",
 					"}\r",
+					"\r",
+					"\r",
+					"// General IDs\r",
+					"const invalidFormatId = getRandomString(8);\r",
+					"pm.collectionVariables.set(\"invalidFormatId\", invalidFormatId);\r",
+					"\r",
+					"const negativeId = getRandomInt(-999, -1);\r",
+					"pm.collectionVariables.set(\"negativeId\", negativeId);\r",
+					"\r",
 					"\r",
 					"// User IDs\r",
 					"const userId = getRandomInt(1, 10); // Get random user id from 1 to 10\r",
@@ -2203,13 +2525,13 @@
 					"const nonExistingUserId = getRandomInt(11, 100);\r",
 					"pm.collectionVariables.set(\"nonExistingUserId\", nonExistingUserId);\r",
 					"\r",
-					"const invalidFormatUserId = getRandomString(8);\r",
-					"pm.collectionVariables.set(\"invalidFormatUserId\", invalidFormatUserId);\r",
-					"\r",
 					"\r",
 					"// TODO IDs\r",
 					"const todoId = getRandomInt(1, 200);\r",
-					"pm.collectionVariables.set(\"todoId\", todoId);"
+					"pm.collectionVariables.set(\"todoId\", todoId);\r",
+					"\r",
+					"const nonExistingTodoId = getRandomInt(201, 1000);\r",
+					"pm.collectionVariables.set(\"nonExistingTodoId\", nonExistingTodoId);"
 				]
 			}
 		},
@@ -2247,19 +2569,27 @@
 		},
 		{
 			"key": "userId",
-			"value": ""
+			"value": "1"
 		},
 		{
 			"key": "nonExistingUserId",
-			"value": ""
-		},
-		{
-			"key": "invalidFormatUserId",
-			"value": ""
+			"value": "11"
 		},
 		{
 			"key": "todoId",
-			"value": ""
+			"value": "1"
+		},
+		{
+			"key": "nonExistingTodoId",
+			"value": "201"
+		},
+		{
+			"key": "invalidFormatId",
+			"value": "abc"
+		},
+		{
+			"key": "negativeId",
+			"value": "-1"
 		}
 	]
 }
