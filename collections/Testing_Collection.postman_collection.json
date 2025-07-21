@@ -12,7 +12,889 @@
 			"name": "GET",
 			"item": [
 				{
+					"name": "Negative Tests",
+					"item": [
+						{
+							"name": "Get specific user",
+							"item": [
+								{
+									"name": "Non-existing ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/users/{{nonExistingUserId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"users",
+												"{{nonExistingUserId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid ID format",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/users/{{invalidFormatUserId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"users",
+												"{{invalidFormatUserId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ID is zero",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/users/0",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"users",
+												"0"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/users/-12",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"users",
+												"-12"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Out of scope ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/users/9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"users",
+												"9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SQL Injection",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/users/{{userId}}; DROP TABLE users;",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"users",
+												"{{userId}}; DROP TABLE users;"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											"pm.test(\"Status code is 404\", () => {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "Specific todos by user",
+							"item": [
+								{
+									"name": "Non-existing ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "userId",
+												"value": "5",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/?userId={{nonExistingUserId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												""
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "{{nonExistingUserId}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid ID format",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", () => {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/?userId={{invalidFormatUserId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												""
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "{{invalidFormatUserId}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ID is zero",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/?userId=0",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												""
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/?userId=-30",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												""
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "-30"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Out of scope ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/?userId=999999999999999999999999999999999999999999999999999",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												""
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "999999999999999999999999999999999999999999999999999"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SQL Injection",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/?userId={{userId}}; DROP TABLE users;",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												""
+											],
+											"query": [
+												{
+													"key": "userId",
+													"value": "{{userId}}; DROP TABLE users;"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"packages": {},
+										"exec": [
+											"pm.test(\"Status code is 404\", () => {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										]
+									}
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"pm.variables.set(\"skipStatus200\", true);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
 					"name": "Get list of all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"],\r",
+									"        properties: {\r",
+									"            id: { type: \"number\" },\r",
+									"            name: { type: \"string\" },\r",
+									"            username: { type: \"string\" },\r",
+									"            email: { type: \"string\" },\r",
+									"            address: {\r",
+									"                type: \"object\",\r",
+									"                required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"],\r",
+									"                properties: {\r",
+									"                    street: { type: \"string\" },\r",
+									"                    suite: { type: \"string\" },\r",
+									"                    city: { type: \"string\" },\r",
+									"                    zipcode: { type: \"string\" },\r",
+									"                    geo: {\r",
+									"                        type: \"object\",\r",
+									"                        required: [\"lat\", \"lng\"],\r",
+									"                        properties: {\r",
+									"                            lat: { type: \"string\" },\r",
+									"                            lng: { type: \"string\" }\r",
+									"                        }\r",
+									"                    }\r",
+									"                }\r",
+									"            },\r",
+									"            phone: { type: \"string\" },\r",
+									"            website: { type: \"string\" },\r",
+									"            company: {\r",
+									"                type: \"object\",\r",
+									"                required: [\"name\", \"catchPhrase\", \"bs\"],\r",
+									"                properties: {\r",
+									"                    name: { type: \"string\" },\r",
+									"                    catchPhrase: { type: \"string\" },\r",
+									"                    bs: { type: \"string\" }\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Array has 10 users\", () => {\r",
+									"    const users = pm.response.json();\r",
+									"    pm.expect(users.length).to.equal(10);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -37,42 +919,67 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"const schema = {",
+									"    type: \"object\",",
+									"    required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"],",
+									"    properties: {",
+									"        id: { type: \"number\" },",
+									"        name: { type: \"string\" },",
+									"        username: { type: \"string\" },",
+									"        email: { type: \"string\" },",
+									"        address: {",
+									"            type: \"object\",",
+									"            required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"],",
+									"            properties: {",
+									"                street: { type: \"string\" },",
+									"                suite: { type: \"string\" },",
+									"                city: { type: \"string\" },",
+									"                zipcode: { type: \"string\" },",
+									"                geo: {",
+									"                    type: \"object\",",
+									"                    required: [\"lat\", \"lng\"],",
+									"                    properties: {",
+									"                        lat: { type: \"string\" },",
+									"                        lng: { type: \"string\" }",
+									"                    }",
+									"                }",
+									"            }",
+									"        },",
+									"        phone: { type: \"string\" },",
+									"        website: { type: \"string\" },",
+									"        company: {",
+									"            type: \"object\",",
+									"            required: [\"name\", \"catchPhrase\", \"bs\"],",
+									"            properties: {",
+									"                name: { type: \"string\" },",
+									"                catchPhrase: { type: \"string\" },",
+									"                bs: { type: \"string\" }",
+									"            }",
+									"        }",
+									"    }",
+									"};",
 									"",
-									"pm.test(\"Id number correspond to user id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"id\"));",
-									"})",
-									"",
-									"pm.test(\"Test data type of the response for randomly choosen User\", () => {",
-									"  pm.expect(jsonData).to.be.an(\"object\");",
-									"  pm.expect(jsonData.id).to.be.a(\"number\");",
-									"  pm.expect(jsonData.name).to.be.a(\"String\");",
-									"  pm.expect(jsonData.username).to.be.an(\"String\");",
-									"  pm.expect(jsonData.email).to.be.an(\"String\");",
-									"  pm.expect(jsonData.address).to.be.an(\"object\");",
-									"  pm.expect(jsonData.address.street).to.be.an(\"String\");",
-									"  pm.expect(jsonData.address.suite).to.be.an(\"String\");",
-									"  pm.expect(jsonData.address.city).to.be.an(\"String\");",
-									"  pm.expect(jsonData.address.zipcode).to.be.an(\"String\");",
-									"  pm.expect(jsonData.address.geo).to.be.an(\"object\");",
-									"  pm.expect(jsonData.phone).to.be.an(\"String\");",
-									"  pm.expect(jsonData.website).to.be.a(\"String\");",
-									"  pm.expect(jsonData.company).to.be.a(\"Object\");",
-									"  pm.expect(jsonData.company.name).to.be.an(\"String\");",
-									"  pm.expect(jsonData.company.catchPhrase).to.be.an(\"String\");",
-									"  pm.expect(jsonData.company.bs).to.be.an(\"String\");",
-									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
 									"});",
-									"console.error()"
+									"",
+									"pm.test(\"Requested ID corresponds to user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(userId);",
+									"});",
+									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -98,13 +1005,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/users/{{id}}",
+							"raw": "{{url}}/users/{{userId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"{{id}}"
+								"{{userId}}"
 							]
 						}
 					},
@@ -112,6 +1019,39 @@
 				},
 				{
 					"name": "Get list of todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"userId\", \"id\", \"title\", \"completed\"],\r",
+									"        properties: {\r",
+									"            userId: { type: \"integer\" },\r",
+									"            id: { type: \"integer\" },\r",
+									"            title: { type: \"string\" },\r",
+									"            completed: { type: \"boolean\" }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has 200 items\", () => {\r",
+									"    pm.expect(pm.response.json().length).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -136,22 +1076,43 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Test todos list by user id; todos should be returned only for called User ID\", function () {",
-									"    var number=pm.environment.get('number10');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"const schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"        type: \"object\",",
+									"        required: [\"userId\", \"id\", \"title\", \"completed\"],",
+									"        properties: {",
+									"            userId: { type: \"integer\" },",
+									"            id: { type: \"integer\" },",
+									"            title: { type: \"string\" },",
+									"            completed: { type: \"boolean\" }",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
 									"});",
 									"",
-									""
+									"pm.test(\"Todos are returned only for the requested user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const todos = pm.response.json();",
+									"    ",
+									"    todos.forEach(todo => {",
+									"        pm.expect(todo.userId).to.equal(userId);",
+									"    });",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -164,7 +1125,8 @@
 							{
 								"key": "userId",
 								"value": "5",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -177,7 +1139,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/todos/?userId={{number10}}",
+							"raw": "{{url}}/todos/?userId={{userId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -188,7 +1150,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "{{number10}}"
+									"value": "{{userId}}"
 								}
 							]
 						}
@@ -204,7 +1166,8 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
@@ -212,12 +1175,27 @@
 							"script": {
 								"exec": [
 									"const jsonData = pm.response.json();",
+									"const schema = {",
+									"    type: \"object\",",
+									"    required: [\"userId\", \"id\", \"title\", \"completed\"],",
+									"    properties: {",
+									"        userId: { type: \"number\" },",
+									"        id: { type: \"number\" },",
+									"        title: { type: \"string\" },",
+									"        completed: { type: \"boolean\" }",
+									"    }",
+									"};",
 									"",
-									"pm.test(\"Todos ID in response correspond to called todos id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"todosID\"));",
-									"})"
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"TODO ID corresponds to the requested TODO ID\", () => {",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"todoId\"));",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -237,13 +1215,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/todos/{{todosID}}",
+							"raw": "{{url}}/todos/{{todoId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"todos",
-								"{{todosID}}"
+								"{{todoId}}"
 							]
 						}
 					},
@@ -713,7 +1691,11 @@
 					"script": {
 						"type": "text/javascript",
 						"exec": [
-							""
+							"if (!pm.variables.get(\"skipStatus200\")) {\r",
+							"    pm.test(\"Status code is 200\", () => {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}"
 						]
 					}
 				}
@@ -1201,25 +2183,33 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"var replace=randInt(1,10);",
-					"var hundred=randInt(1,100)",
-					"var twoHundred=randInt(1,200)",
-					"var fiveHundred=randInt(1,500)",
-					"var fiveThousands=randInt(1, 5000);",
-					"",
-					"pm.collectionVariables.set('todosID', twoHundred) ",
-					"pm.collectionVariables.set('id', replace) ",
-					"pm.collectionVariables.set('albumID', hundred) ",
-					"pm.collectionVariables.set('photoID', fiveThousands)",
-					"pm.collectionVariables.set('commentID', fiveHundred)",
-					"pm.collectionVariables.set('postID', hundred)",
-					"",
-					"pm.environment.set(\"number10\", replace)",
-					"pm.environment.set(\"number100\", hundred)",
-					"",
-					"function randInt(min, max) {",
-					"   return Math.round((Math.random() * Math.abs(max - min)) + min);",
-					"}"
+					"// Number randomizer function\r",
+					"function getRandomInt(min, max) {\r",
+					"    min = Math.ceil(min);\r",
+					"    max = Math.floor(max);\r",
+					"    return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+					"}\r",
+					"\r",
+					"// String randomizer function\r",
+					"function getRandomString(length) {\r",
+					"    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+					"    return Array.from({length}, () => chars[Math.floor(Math.random() * chars.length)]).join('');\r",
+					"}\r",
+					"\r",
+					"// User IDs\r",
+					"const userId = getRandomInt(1, 10); // Get random user id from 1 to 10\r",
+					"pm.collectionVariables.set(\"userId\", userId);\r",
+					"\r",
+					"const nonExistingUserId = getRandomInt(11, 100);\r",
+					"pm.collectionVariables.set(\"nonExistingUserId\", nonExistingUserId);\r",
+					"\r",
+					"const invalidFormatUserId = getRandomString(8);\r",
+					"pm.collectionVariables.set(\"invalidFormatUserId\", invalidFormatUserId);\r",
+					"\r",
+					"\r",
+					"// TODO IDs\r",
+					"const todoId = getRandomInt(1, 200);\r",
+					"pm.collectionVariables.set(\"todoId\", todoId);"
 				]
 			}
 		},
@@ -1228,13 +2218,23 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.test(\"Status code is 200 or 201\", function () {",
-					"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);",
-					"});",
-					"pm.test(\"Response time is less than 1000ms\", function () {",
-					"    pm.expect(pm.response.responseTime).to.be.below(1000);",
-					"});",
-					""
+					"// Check JSON format and correct parsing\r",
+					"pm.test(\"Response is valid JSON\", () => {\r",
+					"    pm.response.to.be.withBody;\r",
+					"    pm.response.to.have.header(\"Content-Type\");\r",
+					"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+					"\r",
+					"    try {\r",
+					"        pm.response.json();\r",
+					"    } catch (e) {\r",
+					"        pm.expect.fail(\"Response is not valid JSON\");\r",
+					"    }\r",
+					"});\r",
+					"\r",
+					"// Check the response time\r",
+					"pm.test(\"Response time is under 500ms\", () => {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+					"});"
 				]
 			}
 		}
@@ -1246,31 +2246,20 @@
 			"type": "string"
 		},
 		{
-			"key": "id",
-			"value": "1"
-		},
-		{
-			"key": "todosID",
-			"value": "1"
-		},
-		{
-			"key": "albumID",
-			"value": "1",
-			"type": "string"
-		},
-		{
-			"key": "photoID",
-			"value": "1",
-			"type": "string"
-		},
-		{
-			"key": "commentID",
+			"key": "userId",
 			"value": ""
 		},
 		{
-			"key": "postID",
-			"value": "",
-			"type": "string"
+			"key": "nonExistingUserId",
+			"value": ""
+		},
+		{
+			"key": "invalidFormatUserId",
+			"value": ""
+		},
+		{
+			"key": "todoId",
+			"value": ""
 		}
 	]
 }
