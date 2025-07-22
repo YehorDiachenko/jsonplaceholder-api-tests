@@ -121,13 +121,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/users/{{invalidFormatUserId}}",
+											"raw": "{{url}}/users/{{invalidFormatId}}",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"users",
-												"{{invalidFormatUserId}}"
+												"{{invalidFormatId}}"
 											]
 										}
 									},
@@ -237,13 +237,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/users/-12",
+											"raw": "{{url}}/users/{{negativeId}}",
 											"host": [
 												"{{url}}"
 											],
 											"path": [
 												"users",
-												"-12"
+												"{{negativeId}}"
 											]
 										}
 									},
@@ -383,9 +383,7 @@
 										"type": "text/javascript",
 										"packages": {},
 										"exec": [
-											"pm.test(\"Status code is 404\", () => {\r",
-											"    pm.response.to.have.status(404);\r",
-											"});"
+											""
 										]
 									}
 								}
@@ -476,9 +474,7 @@
 											"listen": "test",
 											"script": {
 												"exec": [
-													"pm.test(\"Status code is 404\", () => {\r",
-													"    pm.response.to.have.status(404);\r",
-													"});"
+													""
 												],
 												"type": "text/javascript",
 												"packages": {}
@@ -507,7 +503,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/todos/?userId={{invalidFormatUserId}}",
+											"raw": "{{url}}/todos/?userId={{invalidFormatId}}",
 											"host": [
 												"{{url}}"
 											],
@@ -518,7 +514,7 @@
 											"query": [
 												{
 													"key": "userId",
-													"value": "{{invalidFormatUserId}}"
+													"value": "{{invalidFormatId}}"
 												}
 											]
 										}
@@ -635,7 +631,7 @@
 											}
 										},
 										"url": {
-											"raw": "{{url}}/todos/?userId=-30",
+											"raw": "{{url}}/todos/?userId={{negativeId}}",
 											"host": [
 												"{{url}}"
 											],
@@ -646,7 +642,7 @@
 											"query": [
 												{
 													"key": "userId",
-													"value": "-30"
+													"value": "{{negativeId}}"
 												}
 											]
 										}
@@ -799,11 +795,326 @@
 										"type": "text/javascript",
 										"packages": {},
 										"exec": [
-											"pm.test(\"Status code is 404\", () => {\r",
-											"    pm.response.to.have.status(404);\r",
-											"});"
+											""
 										]
 									}
+								}
+							]
+						},
+						{
+							"name": "Specific todos by todos ID",
+							"item": [
+								{
+									"name": "Non-existing ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{nonExistingTodoId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{nonExistingTodoId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Invalid ID format",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{invalidFormatId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{invalidFormatId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "ID is zero",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/0",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"0"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Negative ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{negativeId}}",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{negativeId}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Out of scope ID",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/999999999999999999999999999999999999999999999999999999",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"999999999999999999999999999999999999999999999999999999"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "SQL Injection",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "javascript"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url}}/todos/{{todoId}}; DROP TABLE users;",
+											"host": [
+												"{{url}}"
+											],
+											"path": [
+												"todos",
+												"{{todoId}}; DROP TABLE users;"
+											]
+										}
+									},
+									"response": []
 								}
 							]
 						}
@@ -825,7 +1136,9 @@
 								"type": "text/javascript",
 								"packages": {},
 								"exec": [
-									""
+									"pm.test(\"Status code is 404\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
 								]
 							}
 						}
@@ -838,50 +1151,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const schema = {\r",
-									"    type: \"array\",\r",
-									"    items: {\r",
-									"        type: \"object\",\r",
-									"        required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"],\r",
-									"        properties: {\r",
-									"            id: { type: \"number\" },\r",
-									"            name: { type: \"string\" },\r",
-									"            username: { type: \"string\" },\r",
-									"            email: { type: \"string\" },\r",
-									"            address: {\r",
-									"                type: \"object\",\r",
-									"                required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"],\r",
-									"                properties: {\r",
-									"                    street: { type: \"string\" },\r",
-									"                    suite: { type: \"string\" },\r",
-									"                    city: { type: \"string\" },\r",
-									"                    zipcode: { type: \"string\" },\r",
-									"                    geo: {\r",
-									"                        type: \"object\",\r",
-									"                        required: [\"lat\", \"lng\"],\r",
-									"                        properties: {\r",
-									"                            lat: { type: \"string\" },\r",
-									"                            lng: { type: \"string\" }\r",
-									"                        }\r",
-									"                    }\r",
-									"                }\r",
-									"            },\r",
-									"            phone: { type: \"string\" },\r",
-									"            website: { type: \"string\" },\r",
-									"            company: {\r",
-									"                type: \"object\",\r",
-									"                required: [\"name\", \"catchPhrase\", \"bs\"],\r",
-									"                properties: {\r",
-									"                    name: { type: \"string\" },\r",
-									"                    catchPhrase: { type: \"string\" },\r",
-									"                    bs: { type: \"string\" }\r",
-									"                }\r",
-									"            }\r",
-									"        }\r",
-									"    }\r",
-									"};\r",
-									"\r",
 									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"usersSchema\");\r",
 									"    pm.response.to.have.jsonSchema(schema);\r",
 									"});\r",
 									"\r",
@@ -927,47 +1198,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const schema = {",
-									"    type: \"object\",",
-									"    required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"],",
-									"    properties: {",
-									"        id: { type: \"number\" },",
-									"        name: { type: \"string\" },",
-									"        username: { type: \"string\" },",
-									"        email: { type: \"string\" },",
-									"        address: {",
-									"            type: \"object\",",
-									"            required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"],",
-									"            properties: {",
-									"                street: { type: \"string\" },",
-									"                suite: { type: \"string\" },",
-									"                city: { type: \"string\" },",
-									"                zipcode: { type: \"string\" },",
-									"                geo: {",
-									"                    type: \"object\",",
-									"                    required: [\"lat\", \"lng\"],",
-									"                    properties: {",
-									"                        lat: { type: \"string\" },",
-									"                        lng: { type: \"string\" }",
-									"                    }",
-									"                }",
-									"            }",
-									"        },",
-									"        phone: { type: \"string\" },",
-									"        website: { type: \"string\" },",
-									"        company: {",
-									"            type: \"object\",",
-									"            required: [\"name\", \"catchPhrase\", \"bs\"],",
-									"            properties: {",
-									"                name: { type: \"string\" },",
-									"                catchPhrase: { type: \"string\" },",
-									"                bs: { type: \"string\" }",
-									"            }",
-									"        }",
-									"    }",
-									"};",
-									"",
 									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"userSchema\");",
 									"    pm.response.to.have.jsonSchema(schema);",
 									"});",
 									"",
@@ -1024,21 +1256,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const schema = {\r",
-									"    type: \"array\",\r",
-									"    items: {\r",
-									"        type: \"object\",\r",
-									"        required: [\"userId\", \"id\", \"title\", \"completed\"],\r",
-									"        properties: {\r",
-									"            userId: { type: \"integer\" },\r",
-									"            id: { type: \"integer\" },\r",
-									"            title: { type: \"string\" },\r",
-									"            completed: { type: \"boolean\" }\r",
-									"        }\r",
-									"    }\r",
-									"};\r",
-									"\r",
 									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"todosSchema\");\r",
 									"    pm.response.to.have.jsonSchema(schema);\r",
 									"});\r",
 									"\r",
@@ -1084,21 +1303,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const schema = {",
-									"    type: \"array\",",
-									"    items: {",
-									"        type: \"object\",",
-									"        required: [\"userId\", \"id\", \"title\", \"completed\"],",
-									"        properties: {",
-									"            userId: { type: \"integer\" },",
-									"            id: { type: \"integer\" },",
-									"            title: { type: \"string\" },",
-									"            completed: { type: \"boolean\" }",
-									"        }",
-									"    }",
-									"};",
-									"",
 									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"todosSchema\");",
 									"    pm.response.to.have.jsonSchema(schema);",
 									"});",
 									"",
@@ -1158,7 +1364,7 @@
 					"response": []
 				},
 				{
-					"name": "Specific todos by todos ID",
+					"name": "Specific todo by todo ID",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1175,18 +1381,9 @@
 							"script": {
 								"exec": [
 									"const jsonData = pm.response.json();",
-									"const schema = {",
-									"    type: \"object\",",
-									"    required: [\"userId\", \"id\", \"title\", \"completed\"],",
-									"    properties: {",
-									"        userId: { type: \"number\" },",
-									"        id: { type: \"number\" },",
-									"        title: { type: \"string\" },",
-									"        completed: { type: \"boolean\" }",
-									"    }",
-									"};",
 									"",
 									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"todoSchema\");",
 									"    pm.response.to.have.jsonSchema(schema);",
 									"});",
 									"",
@@ -1229,6 +1426,26 @@
 				},
 				{
 					"name": "Get album list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"albumsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Albums array contains 100 items\", () => {\r",
+									"    const albums = pm.response.json();\r",
+									"    pm.expect(albums.length).to.equal(100);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1245,7 +1462,7 @@
 					"response": []
 				},
 				{
-					"name": "Specific album by user ID",
+					"name": "Get albums by user ID",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1253,20 +1470,30 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Album showed only for specific user ID\", function () {",
-									"    var number=pm.environment.get('number10');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"albumsSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Albums are returned only for the requested user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const albums = pm.response.json();",
+									"    ",
+									"    albums.forEach(album => {",
+									"        pm.expect(album.userId).to.equal(userId);",
+									"    });",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1274,7 +1501,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/albums/?userId={{number10}}",
+							"raw": "{{url}}/albums/?userId={{userId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1285,7 +1512,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "{{number10}}"
+									"value": "{{userId}}"
 								}
 							]
 						}
@@ -1301,20 +1528,27 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"albumSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
 									"",
-									"pm.test(\"Album ID in response correspond to called album id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(parseInt(pm.collectionVariables.get(\"albumID\")));",
-									"})"
+									"pm.test(\"Requested ID corresponds to album ID\", () => {",
+									"    const albumId = pm.collectionVariables.get(\"albumId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(albumId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1322,13 +1556,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/albums/{{albumID}}",
+							"raw": "{{url}}/albums/{{albumId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"albums",
-								"{{albumID}}"
+								"{{albumId}}"
 							]
 						}
 					},
@@ -1336,6 +1570,26 @@
 				},
 				{
 					"name": "Get list of photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"photosSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Photos array contains 5000 items\", () => {\r",
+									"    const photos = pm.response.json();\r",
+									"    pm.expect(photos.length).to.equal(5000);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1359,13 +1613,19 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"photoSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
 									"",
-									"pm.test(\"Photo ID in response correspond to called photo id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"photoID\"));",
-									"})"
+									"pm.test(\"Requested ID corresponds to photo ID\", () => {",
+									"    const photoId = pm.collectionVariables.get(\"photoId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(photoId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1373,13 +1633,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/photos/{{photoID}}",
+							"raw": "{{url}}/photos/{{photoId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"photos",
-								"{{photoID}}"
+								"{{photoId}}"
 							]
 						}
 					},
@@ -1392,13 +1652,22 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Photos showed only for specific Album ID\", function () {",
-									"    var number=pm.environment.get('number100');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].albumId).to.eql(number);",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"photosSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"ID matches requested album IDs\", () => {",
+									"    const albumId = pm.collectionVariables.get(\"albumId\");",
+									"    const photos = pm.response.json();",
+									"",
+									"    photos.forEach(photo => {",
+									"        pm.expect(photo.albumId).to.be.equal(albumId);",
+									"    })",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1406,7 +1675,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/photos/?albumId={{number100}}",
+							"raw": "{{url}}/photos/?albumId={{albumId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1417,7 +1686,7 @@
 							"query": [
 								{
 									"key": "albumId",
-									"value": "{{number100}}"
+									"value": "{{albumId}}"
 								}
 							]
 						}
@@ -1426,6 +1695,26 @@
 				},
 				{
 					"name": "Get list of comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"commentsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Comments array contains 500 items\", () => {\r",
+									"    const comments = pm.response.json();\r",
+									"    pm.expect(comments.length).to.be.equal(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1448,13 +1737,19 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"commentSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
 									"",
-									"pm.test(\"Comment ID in response correspond to called comment id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"commentID\"));",
-									"})"
+									"pm.test(\"Requested ID matches comment ID from response\", () => {",
+									"    const commentId = pm.collectionVariables.get(\"commentId\");",
+									"    const comment = pm.response.json();",
+									"    pm.expect(comment.id).to.be.equal(commentId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1462,58 +1757,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/comments/{{commentID}}",
+							"raw": "{{url}}/comments/{{commentId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"comments",
-								"{{commentID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Save email and post ID from comment request",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"//saved email as global variable from random comment ",
-									"const jsonData = pm.response.json();",
-									"pm.globals.set(\"savedEmail\", jsonData.email)",
-									"",
-									"//saved postId as global variable",
-									"pm.globals.set(\"savedPostId\", jsonData.postId)",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments/{{commentID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments",
-								"{{commentID}}"
+								"{{commentId}}"
 							]
 						}
 					},
@@ -1526,13 +1776,22 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Comments reutrned only for appropriate postID\", function () {",
-									"    var number=pm.environment.get('number100');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].postId).to.eql(number);",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"commentsSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches post IDs in response\", () => {",
+									"    const postId = pm.collectionVariables.get(\"postId\");",
+									"    const comments = pm.response.json();",
+									"",
+									"    comments.forEach(comment => {",
+									"        pm.expect(comment.postId).to.be.equal(postId);",
+									"    })",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1540,7 +1799,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/comments/?postId={{number100}}",
+							"raw": "{{url}}/comments/?postId={{postId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1551,7 +1810,7 @@
 							"query": [
 								{
 									"key": "postId",
-									"value": "{{number100}}"
+									"value": "{{postId}}"
 								}
 							]
 						}
@@ -1560,6 +1819,26 @@
 				},
 				{
 					"name": "Get list of posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"postsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Posts array contains 100 items\", () => {\r",
+									"    const posts = pm.response.json();\r",
+									"    pm.expect(posts.length).to.be.equal(100);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1582,13 +1861,22 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Posts returned only for appropriate user ID\", function () {",
-									"    var number=pm.environment.get('number10');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"postsSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches user IDs in response\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const posts = pm.response.json();",
+									"",
+									"    posts.forEach(post => {",
+									"        pm.expect(post.userId).to.be.equal(userId);",
+									"    })",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1596,7 +1884,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/?userId={{number10}}",
+							"raw": "{{url}}/posts/?userId={{userId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1607,7 +1895,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "{{number10}}"
+									"value": "{{userId}}"
 								}
 							]
 						}
@@ -1623,20 +1911,27 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"postSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
 									"",
-									"pm.test(\"Post ID in response correspond to called post's id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"postID\"));",
-									"})"
+									"pm.test(\"Requested ID matches post ID from response\", () => {",
+									"    const postId = pm.collectionVariables.get(\"postId\");",
+									"    const post = pm.response.json();",
+									"    pm.expect(post.id).to.be.equal(postId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1644,13 +1939,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/{{postID}}",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"{{postID}}"
+								"{{postId}}"
 							]
 						}
 					},
@@ -1658,17 +1953,41 @@
 				},
 				{
 					"name": "All comments for specific post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"commentsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Requested ID matches post IDs in response\", () => {\r",
+									"    const postId = pm.collectionVariables.get(\"postId\");\r",
+									"    const comments = pm.response.json();\r",
+									"\r",
+									"    comments.forEach(comment => {\r",
+									"        pm.expect(comment.postId).to.be.equal(postId);\r",
+									"    })\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/{{number100}}/comments",
+							"raw": "{{url}}/posts/{{postId}}/comments",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"{{number100}}",
+								"{{postId}}",
 								"comments"
 							]
 						}
@@ -1705,49 +2024,16 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "Post request",
-					"event": [
+					"name": "Negative Tests",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[{\n    \"userId\": 8,\n    \"id\": 55,\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  },\n  {\n    \"userId\": 4,\n    \"id\": 44,\n    \"title\": \"Post created by Marko\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Post request",
-							"originalRequest": {
+							"name": "Empty body",
+							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[{\n    \"userId\": 8,\n    \"id\": 55,\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  },\n  {\n    \"userId\": 4,\n    \"id\": 44,\n    \"title\": \"Post created by Marko\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }]",
+									"raw": "{}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1764,124 +2050,215 @@
 									]
 								}
 							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 27 Mar 2022 14:51:09 GMT"
+							"response": []
+						},
+						{
+							"name": "Without title and user ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"body\": \"{{postBody}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "334"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "X-Ratelimit-Limit",
-									"value": "1000"
-								},
-								{
-									"key": "X-Ratelimit-Remaining",
-									"value": "999"
-								},
-								{
-									"key": "X-Ratelimit-Reset",
-									"value": "1648392722"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin, X-HTTP-Method-Override, Accept-Encoding"
-								},
-								{
-									"key": "Access-Control-Allow-Credentials",
-									"value": "true"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "-1"
-								},
-								{
-									"key": "Access-Control-Expose-Headers",
-									"value": "Location"
-								},
-								{
-									"key": "Location",
-									"value": "http://jsonplaceholder.typicode.com/posts/101"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "Etag",
-									"value": "W/\"14e-1qSAuyIMsVUszVSsA4/GWV2M3bA\""
-								},
-								{
-									"key": "Via",
-									"value": "1.1 vegur"
-								},
-								{
-									"key": "CF-Cache-Status",
-									"value": "DYNAMIC"
-								},
-								{
-									"key": "Expect-CT",
-									"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
-								},
-								{
-									"key": "Report-To",
-									"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9%2B4FVspmc%2BOlGv1kgTaQrT5QnlsBovFCTrRptzkntuUdeHQTIZ5ysM652tgju0O6i2yahyr7ELQI8BhSI5PWkaPonsNBBxmwAG7uUY%2BeOa%2Bkmft2O%2BAB8XdC5k2isHRFwS%2Fe5gtaNZQoLhn3ymgS\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "NEL",
-									"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "Server",
-									"value": "cloudflare"
-								},
-								{
-									"key": "CF-RAY",
-									"value": "6f28f143da440faa-VIE"
-								},
-								{
-									"key": "alt-svc",
-									"value": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"0\": {\n        \"userId\": 8,\n        \"id\": 55,\n        \"title\": \"Post created by Nikola\",\n        \"body\": \"This is first post request on fake api server jsonplaceholder\"\n    },\n    \"1\": {\n        \"userId\": 4,\n        \"id\": 44,\n        \"title\": \"Post created by Marko\",\n        \"body\": \"This is first post request on fake api server jsonplaceholder\"\n    },\n    \"id\": 101\n}"
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid user ID format",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": {{invalidFormatId}},\r\n    \"title\": \"{{postTitle}}\",\r\n    \"body\": \"{{postBody}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Long strings and UNICODE special characters",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": {{userId}},\r\n  \"title\": \"🧪\".repeat(1000),\r\n  \"body\": \"🚨\".repeat(5000)\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empty strings and spaces",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": {{userId}},\r\n  \"title\": \"   \",\r\n  \"body\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unexpected data types",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"{{invalidFormatId}}\",\r\n  \"title\": {{userId}},\r\n  \"body\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"pm.variables.set(\"skipStatus201\", true);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								]
+							}
 						}
 					]
 				},
 				{
-					"name": "Post request with saved value",
+					"name": "Create Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"postSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID matches specified user ID\", () => {\r",
+									"    const userId = pm.collectionVariables.get(\"userId\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.userId).to.be.equal(userId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post title matches specified title\", () => {\r",
+									"    const postTitle = pm.collectionVariables.get(\"postTitle\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.title).to.be.equal(postTitle);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post body matches specified body\", () => {\r",
+									"    const postBody = pm.collectionVariables.get(\"postBody\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.body).to.be.equal(postBody);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": {{userId}},\n    \"id\": {{postID}},\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }",
+							"raw": "{\n    \"userId\": {{userId}},\n    \"title\": \"{{postTitle}}\",\n    \"body\": \"{{postBody}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1900,19 +2277,45 @@
 					},
 					"response": []
 				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"if (!pm.variables.get(\"skipStatus201\")) {\r",
+							"    pm.test(\"Status code is 201\", () => {\r",
+							"        pm.response.to.have.status(201);\r",
+							"    });\r",
+							"}"
+						]
+					}
+				}
 			]
 		},
 		{
 			"name": "PUT",
 			"item": [
 				{
-					"name": "Put request",
+					"name": "Update Post",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": 8,\n  \"title\": \"JSON placeholder put request\",\n  \"body\": \"Put request used\"\n}",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"title\": \"{{postTitle}}\",\n  \"body\": \"{{postBody}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1920,147 +2323,41 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"{{postId}}"
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Put request",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"userId\": 8,\n  \"title\": \"JSON placeholder put request\",\n  \"body\": \"Put request used\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/posts/1",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"posts",
-										"1"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 27 Mar 2022 17:23:03 GMT"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "X-Ratelimit-Limit",
-									"value": "1000"
-								},
-								{
-									"key": "X-Ratelimit-Remaining",
-									"value": "999"
-								},
-								{
-									"key": "X-Ratelimit-Reset",
-									"value": "1648401842"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin, Accept-Encoding"
-								},
-								{
-									"key": "Access-Control-Allow-Credentials",
-									"value": "true"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "-1"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "Etag",
-									"value": "W/\"65-AdI5wLfR+D27e3BL0UuwCN4t250\""
-								},
-								{
-									"key": "Via",
-									"value": "1.1 vegur"
-								},
-								{
-									"key": "CF-Cache-Status",
-									"value": "DYNAMIC"
-								},
-								{
-									"key": "Expect-CT",
-									"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
-								},
-								{
-									"key": "Report-To",
-									"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=tszAVzFVANA275Y2wc1U9tJBWWqTdyQqUGzUUbTRNMV66LrA%2B%2FDR4ZVwxWfcXd1EFE5%2BT71Sbfowxu1dePyLH0Lx6paAljX%2BWSGD%2BcWSbtJ8jR%2FAszDqNgDGcJsONJZcmutsVt9S8Q45abCrZI9k\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "NEL",
-									"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "Server",
-									"value": "cloudflare"
-								},
-								{
-									"key": "CF-RAY",
-									"value": "6f29cfc9bb4a7891-VIE"
-								},
-								{
-									"key": "Content-Encoding",
-									"value": "br"
-								},
-								{
-									"key": "alt-svc",
-									"value": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"userId\": 8,\n    \"title\": \"JSON placeholder put request\",\n    \"body\": \"Put request used\",\n    \"id\": 1\n}"
-						}
-					]
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
 				}
 			]
 		},
@@ -2068,18 +2365,16 @@
 			"name": "PATCH",
 			"item": [
 				{
-					"name": "Patch request",
+					"name": "Patch post",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Body matches string\", function () {",
-									"    var jsonData = JSON.parse(responseBody);",
-									"  pm.expect(jsonData.title.message_content).to.eql(pm.environment.get(\"savedTitle\"));",
-									"});"
+									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2088,7 +2383,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"{{savedTitle}}\"\n}",
+							"raw": "{\n    \"title\": \"{{postTitle}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2096,47 +2391,41 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"{{postId}}"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "Get post title and use for patch request",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"pm.globals.set(\"savedTitle\", jsonData.title)"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/{{postID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postID}}"
-							]
-						}
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
 				}
 			]
 		},
@@ -2144,17 +2433,18 @@
 			"name": "DELETE",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Delete a post",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Response body is empty\", function () {",
-									"    pm.expect(pm.response.text()).to.include(\"\");",
+									"pm.test(\"Response is empty object\", () => {",
+									"    pm.expect(pm.response.json()).to.deep.equal({});",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2162,17 +2452,41 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"{{postId}}"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
 				}
 			]
 		}
@@ -2192,9 +2506,18 @@
 					"\r",
 					"// String randomizer function\r",
 					"function getRandomString(length) {\r",
-					"    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?';\r",
+					"    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$^&*()_+-=[]{}|;:,.<>?';\r",
 					"    return Array.from({length}, () => chars[Math.floor(Math.random() * chars.length)]).join('');\r",
 					"}\r",
+					"\r",
+					"\r",
+					"// General IDs\r",
+					"const invalidFormatId = getRandomString(8);\r",
+					"pm.collectionVariables.set(\"invalidFormatId\", invalidFormatId);\r",
+					"\r",
+					"const negativeId = getRandomInt(-999, -1);\r",
+					"pm.collectionVariables.set(\"negativeId\", negativeId);\r",
+					"\r",
 					"\r",
 					"// User IDs\r",
 					"const userId = getRandomInt(1, 10); // Get random user id from 1 to 10\r",
@@ -2203,13 +2526,311 @@
 					"const nonExistingUserId = getRandomInt(11, 100);\r",
 					"pm.collectionVariables.set(\"nonExistingUserId\", nonExistingUserId);\r",
 					"\r",
-					"const invalidFormatUserId = getRandomString(8);\r",
-					"pm.collectionVariables.set(\"invalidFormatUserId\", invalidFormatUserId);\r",
-					"\r",
 					"\r",
 					"// TODO IDs\r",
 					"const todoId = getRandomInt(1, 200);\r",
-					"pm.collectionVariables.set(\"todoId\", todoId);"
+					"pm.collectionVariables.set(\"todoId\", todoId);\r",
+					"\r",
+					"const nonExistingTodoId = getRandomInt(201, 1000);\r",
+					"pm.collectionVariables.set(\"nonExistingTodoId\", nonExistingTodoId);\r",
+					"\r",
+					"\r",
+					"// Album IDs\r",
+					"const albumId = getRandomInt(1, 100);\r",
+					"pm.collectionVariables.set(\"albumId\", albumId);\r",
+					"\r",
+					"\r",
+					"// Photo ID\r",
+					"const photoId = getRandomInt(1, 5000);\r",
+					"pm.collectionVariables.set(\"photoId\", photoId);\r",
+					"\r",
+					"\r",
+					"// Comment ID\r",
+					"const commentId = getRandomInt(1, 500);\r",
+					"pm.collectionVariables.set(\"commentId\", commentId);\r",
+					"\r",
+					"\r",
+					"// Post ID\r",
+					"const postId = getRandomInt(1, 100);\r",
+					"pm.collectionVariables.set(\"postId\", postId);\r",
+					"\r",
+					"const postTitle = getRandomString(24);\r",
+					"pm.collectionVariables.set(\"postTitle\", postTitle);\r",
+					"\r",
+					"const postBody = getRandomString(128);\r",
+					"pm.collectionVariables.set(\"postBody\", postBody);\r",
+					"\r",
+					"\r",
+					"// SCHEMAS\r",
+					"\r",
+					"// Users array schema\r",
+					"\r",
+					"const usersSchema = {\r",
+					"    type: \"array\",\r",
+					"    items: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"],\r",
+					"        properties: {\r",
+					"            id: { type: \"number\" },\r",
+					"            name: { type: \"string\" },\r",
+					"            username: { type: \"string\" },\r",
+					"            email: { type: \"string\" },\r",
+					"            address: {\r",
+					"                type: \"object\",\r",
+					"                required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"],\r",
+					"                properties: {\r",
+					"                    street: { type: \"string\" },\r",
+					"                    suite: { type: \"string\" },\r",
+					"                    city: { type: \"string\" },\r",
+					"                    zipcode: { type: \"string\" },\r",
+					"                    geo: {\r",
+					"                        type: \"object\",\r",
+					"                        required: [\"lat\", \"lng\"],\r",
+					"                        properties: {\r",
+					"                            lat: { type: \"string\" },\r",
+					"                            lng: { type: \"string\" }\r",
+					"                        }\r",
+					"                    }\r",
+					"                }\r",
+					"            },\r",
+					"            phone: { type: \"string\" },\r",
+					"            website: { type: \"string\" },\r",
+					"            company: {\r",
+					"                type: \"object\",\r",
+					"                required: [\"name\", \"catchPhrase\", \"bs\"],\r",
+					"                properties: {\r",
+					"                    name: { type: \"string\" },\r",
+					"                    catchPhrase: { type: \"string\" },\r",
+					"                    bs: { type: \"string\" }\r",
+					"                }\r",
+					"            }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"usersSchema\", usersSchema);\r",
+					"\r",
+					"\r",
+					"// User schema\r",
+					"\r",
+					"const userSchema = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"id\", \"name\", \"username\", \"email\", \"address\", \"phone\", \"website\", \"company\"],\r",
+					"    properties: {\r",
+					"        id: { type: \"number\" },\r",
+					"        name: { type: \"string\" },\r",
+					"        username: { type: \"string\" },\r",
+					"        email: { type: \"string\" },\r",
+					"        address: {\r",
+					"            type: \"object\",\r",
+					"            required: [\"street\", \"suite\", \"city\", \"zipcode\", \"geo\"],\r",
+					"            properties: {\r",
+					"                street: { type: \"string\" },\r",
+					"                suite: { type: \"string\" },\r",
+					"                city: { type: \"string\" },\r",
+					"                zipcode: { type: \"string\" },\r",
+					"                geo: {\r",
+					"                    type: \"object\",\r",
+					"                    required: [\"lat\", \"lng\"],\r",
+					"                    properties: {\r",
+					"                        lat: { type: \"string\" },\r",
+					"                        lng: { type: \"string\" }\r",
+					"                    }\r",
+					"                }\r",
+					"            }\r",
+					"        },\r",
+					"        phone: { type: \"string\" },\r",
+					"        website: { type: \"string\" },\r",
+					"        company: {\r",
+					"            type: \"object\",\r",
+					"            required: [\"name\", \"catchPhrase\", \"bs\"],\r",
+					"            properties: {\r",
+					"                name: { type: \"string\" },\r",
+					"                catchPhrase: { type: \"string\" },\r",
+					"                bs: { type: \"string\" }\r",
+					"            }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"userSchema\", userSchema);\r",
+					"\r",
+					"\r",
+					"// TODOs array schema\r",
+					"\r",
+					"const todosSchema = {\r",
+					"    type: \"array\",\r",
+					"    items: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"userId\", \"id\", \"title\", \"completed\"],\r",
+					"        properties: {\r",
+					"            userId: { type: \"integer\" },\r",
+					"            id: { type: \"integer\" },\r",
+					"            title: { type: \"string\" },\r",
+					"            completed: { type: \"boolean\" }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"todosSchema\", todosSchema);\r",
+					"\r",
+					"\r",
+					"// TODO Schema\r",
+					"\r",
+					"const todoSchema = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"userId\", \"id\", \"title\", \"completed\"],\r",
+					"    properties: {\r",
+					"        userId: { type: \"number\" },\r",
+					"        id: { type: \"number\" },\r",
+					"        title: { type: \"string\" },\r",
+					"        completed: { type: \"boolean\" }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"todoSchema\", todoSchema);\r",
+					"\r",
+					"\r",
+					"// Albums array schema\r",
+					"\r",
+					"const albumsSchema = {\r",
+					"    type: \"array\",\r",
+					"    items: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"userId\", \"id\", \"title\"],\r",
+					"        properties: {\r",
+					"            userId: { type: \"number\" },\r",
+					"            id: { type: \"number\" },\r",
+					"            title: { type: \"string\" }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"albumsSchema\", albumsSchema);\r",
+					"\r",
+					"\r",
+					"// Album schema\r",
+					"\r",
+					"const albumSchema = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"userId\", \"id\", \"title\"],\r",
+					"    properties: {\r",
+					"        userId: { type: \"number\" },\r",
+					"        id: { type: \"number\" },\r",
+					"        title: { type: \"string\" }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"albumSchema\", albumSchema);\r",
+					"\r",
+					"\r",
+					"// Photos array schema\r",
+					"\r",
+					"const photosSchema = {\r",
+					"    type: \"array\",\r",
+					"    items: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"albumId\", \"id\", \"title\", \"url\", \"thumbnailUrl\"],\r",
+					"        properties: {\r",
+					"            albumId: { type: \"number\" },\r",
+					"            id: { type: \"number\" },\r",
+					"            title: { type: \"string\" },\r",
+					"            url: { type: \"string\" },\r",
+					"            thumbnailUrl: { type: \"string\" }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"photosSchema\", photosSchema);\r",
+					"\r",
+					"\r",
+					"// Photo schema\r",
+					"\r",
+					"const photoSchema = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"albumId\", \"id\", \"title\", \"url\", \"thumbnailUrl\"],\r",
+					"    properties: {\r",
+					"        albumId: { type: \"number\" },\r",
+					"        id: { type: \"number\" },\r",
+					"        title: { type: \"string\" },\r",
+					"        url: { type: \"string\" },\r",
+					"        thumbnailUrl: { type: \"string\" }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"photoSchema\", photoSchema);\r",
+					"\r",
+					"\r",
+					"// Comments array schema\r",
+					"\r",
+					"const commentsSchema = {\r",
+					"    type: \"array\",\r",
+					"    items: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"postId\", \"id\", \"name\", \"email\", \"body\"],\r",
+					"        properties: {\r",
+					"            postId: { type: \"number\" },\r",
+					"            id: { type: \"number\" },\r",
+					"            name: { type: \"string\" },\r",
+					"            email: { type: \"string\" },\r",
+					"            body: { type: \"string\" }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"commentsSchema\", commentsSchema);\r",
+					"\r",
+					"\r",
+					"// Comment schema\r",
+					"\r",
+					"const commentSchema = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"postId\", \"id\", \"name\", \"email\", \"body\"],\r",
+					"    properties: {\r",
+					"        postId: { type: \"number\" },\r",
+					"        id: { type: \"number\" },\r",
+					"        name: { type: \"string\" },\r",
+					"        email: { type: \"string\" },\r",
+					"        body: { type: \"string\" }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"commentSchema\", commentSchema)\r",
+					"\r",
+					"\r",
+					"// Posts array schema\r",
+					"\r",
+					"const postsSchema = {\r",
+					"    type: \"array\",\r",
+					"    items: {\r",
+					"        type: \"object\",\r",
+					"        required: [\"userId\", \"id\", \"title\", \"body\"],\r",
+					"        properties: {\r",
+					"            userId: { type: \"number\" },\r",
+					"            id: { type: \"number\" },\r",
+					"            title: { type: \"string\" },\r",
+					"            body: { type: \"string\" }\r",
+					"        }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"postsSchema\", postsSchema);\r",
+					"\r",
+					"\r",
+					"// Post schema\r",
+					"\r",
+					"const postSchema = {\r",
+					"    type: \"object\",\r",
+					"    required: [\"userId\", \"id\", \"title\", \"body\"],\r",
+					"    properties: {\r",
+					"        userId: { type: \"number\" },\r",
+					"        id: { type: \"number\" },\r",
+					"        title: { type: \"string\" },\r",
+					"        body: { type: \"string\" }\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"pm.collectionVariables.set(\"postSchema\", postSchema);"
 				]
 			}
 		},
@@ -2247,18 +2868,98 @@
 		},
 		{
 			"key": "userId",
-			"value": ""
+			"value": "1"
 		},
 		{
 			"key": "nonExistingUserId",
-			"value": ""
-		},
-		{
-			"key": "invalidFormatUserId",
-			"value": ""
+			"value": "11"
 		},
 		{
 			"key": "todoId",
+			"value": "1"
+		},
+		{
+			"key": "nonExistingTodoId",
+			"value": "201"
+		},
+		{
+			"key": "invalidFormatId",
+			"value": "abc"
+		},
+		{
+			"key": "negativeId",
+			"value": "-1"
+		},
+		{
+			"key": "albumId",
+			"value": "1"
+		},
+		{
+			"key": "photoId",
+			"value": "1"
+		},
+		{
+			"key": "commentId",
+			"value": "1"
+		},
+		{
+			"key": "postId",
+			"value": "1"
+		},
+		{
+			"key": "postTitle",
+			"value": ""
+		},
+		{
+			"key": "postBody",
+			"value": ""
+		},
+		{
+			"key": "usersSchema",
+			"value": ""
+		},
+		{
+			"key": "userSchema",
+			"value": ""
+		},
+		{
+			"key": "todosSchema",
+			"value": ""
+		},
+		{
+			"key": "todoSchema",
+			"value": ""
+		},
+		{
+			"key": "albumsSchema",
+			"value": ""
+		},
+		{
+			"key": "albumSchema",
+			"value": ""
+		},
+		{
+			"key": "photosSchema",
+			"value": ""
+		},
+		{
+			"key": "photoSchema",
+			"value": ""
+		},
+		{
+			"key": "commentsSchema",
+			"value": ""
+		},
+		{
+			"key": "commentSchema",
+			"value": ""
+		},
+		{
+			"key": "postsSchema",
+			"value": ""
+		},
+		{
+			"key": "postSchema",
 			"value": ""
 		}
 	]
