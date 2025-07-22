@@ -2596,13 +2596,13 @@
 			"name": "PUT",
 			"item": [
 				{
-					"name": "Put request",
+					"name": "Update Post",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userId\": 8,\n  \"title\": \"JSON placeholder put request\",\n  \"body\": \"Put request used\"\n}",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"title\": \"{{postTitle}}\",\n  \"body\": \"{{postBody}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2610,147 +2610,41 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"{{postId}}"
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Put request",
-							"originalRequest": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"userId\": 8,\n  \"title\": \"JSON placeholder put request\",\n  \"body\": \"Put request used\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{url}}/posts/1",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"posts",
-										"1"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 27 Mar 2022 17:23:03 GMT"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Transfer-Encoding",
-									"value": "chunked"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "X-Ratelimit-Limit",
-									"value": "1000"
-								},
-								{
-									"key": "X-Ratelimit-Remaining",
-									"value": "999"
-								},
-								{
-									"key": "X-Ratelimit-Reset",
-									"value": "1648401842"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin, Accept-Encoding"
-								},
-								{
-									"key": "Access-Control-Allow-Credentials",
-									"value": "true"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "-1"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "Etag",
-									"value": "W/\"65-AdI5wLfR+D27e3BL0UuwCN4t250\""
-								},
-								{
-									"key": "Via",
-									"value": "1.1 vegur"
-								},
-								{
-									"key": "CF-Cache-Status",
-									"value": "DYNAMIC"
-								},
-								{
-									"key": "Expect-CT",
-									"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
-								},
-								{
-									"key": "Report-To",
-									"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=tszAVzFVANA275Y2wc1U9tJBWWqTdyQqUGzUUbTRNMV66LrA%2B%2FDR4ZVwxWfcXd1EFE5%2BT71Sbfowxu1dePyLH0Lx6paAljX%2BWSGD%2BcWSbtJ8jR%2FAszDqNgDGcJsONJZcmutsVt9S8Q45abCrZI9k\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "NEL",
-									"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "Server",
-									"value": "cloudflare"
-								},
-								{
-									"key": "CF-RAY",
-									"value": "6f29cfc9bb4a7891-VIE"
-								},
-								{
-									"key": "Content-Encoding",
-									"value": "br"
-								},
-								{
-									"key": "alt-svc",
-									"value": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"userId\": 8,\n    \"title\": \"JSON placeholder put request\",\n    \"body\": \"Put request used\",\n    \"id\": 1\n}"
-						}
-					]
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
 				}
 			]
 		},
@@ -2758,7 +2652,7 @@
 			"name": "PATCH",
 			"item": [
 				{
-					"name": "Patch request",
+					"name": "Patch post",
 					"event": [
 						{
 							"listen": "test",
@@ -2769,7 +2663,8 @@
 									"  pm.expect(jsonData.title.message_content).to.eql(pm.environment.get(\"savedTitle\"));",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2778,7 +2673,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"{{savedTitle}}\"\n}",
+							"raw": "{\n    \"title\": \"{{postTitle}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2786,47 +2681,41 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"{{postId}}"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "Get post title and use for patch request",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"pm.globals.set(\"savedTitle\", jsonData.title)"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/{{postID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postID}}"
-							]
-						}
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
 				}
 			]
 		},
@@ -2834,7 +2723,7 @@
 			"name": "DELETE",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Delete a post",
 					"event": [
 						{
 							"listen": "test",
@@ -2844,7 +2733,8 @@
 									"    pm.expect(pm.response.text()).to.include(\"\");",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -2852,17 +2742,41 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/1",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"1"
+								"{{postId}}"
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
 				}
 			]
 		}
