@@ -1542,6 +1542,38 @@
 				},
 				{
 					"name": "Get album list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"userId\", \"id\", \"title\"],\r",
+									"        properties: {\r",
+									"            userId: { type: \"number\" },\r",
+									"            id: { type: \"number\" },\r",
+									"            title: { type: \"string\" }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Albums array contains 100 items\", () => {\r",
+									"    const albums = pm.response.json();\r",
+									"    pm.expect(albums.length).to.equal(100);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1566,20 +1598,42 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Album showed only for specific user ID\", function () {",
-									"    var number=pm.environment.get('number10');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"const schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"        type: \"object\",",
+									"        required: [\"userId\", \"id\", \"title\"],",
+									"        properties: {",
+									"            userId: { type: \"number\" },",
+									"            id: { type: \"number\" },",
+									"            title: { type: \"string\" }",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Albums are returned only for the requested user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const albums = pm.response.json();",
+									"    ",
+									"    albums.forEach(album => {",
+									"        pm.expect(album.userId).to.equal(userId);",
+									"    });",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1587,7 +1641,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/albums/?userId={{number10}}",
+							"raw": "{{url}}/albums/?userId={{userId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1598,7 +1652,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "{{number10}}"
+									"value": "{{userId}}"
 								}
 							]
 						}
@@ -1614,20 +1668,36 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"const schema = {",
+									"    type: \"object\",",
+									"    required: [\"userId\", \"id\", \"title\"],",
+									"    properties: {",
+									"        userId: { type: \"number\" },",
+									"        id: { type: \"number\" },",
+									"        title: { type: \"string\" }",
+									"    }",
+									"};",
 									"",
-									"pm.test(\"Album ID in response correspond to called album id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(parseInt(pm.collectionVariables.get(\"albumID\")));",
-									"})"
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID corresponds to album ID\", () => {",
+									"    const albumId = pm.collectionVariables.get(\"albumId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(albumId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1635,13 +1705,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/albums/{{albumID}}",
+							"raw": "{{url}}/albums/{{albumId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"albums",
-								"{{albumID}}"
+								"{{albumId}}"
 							]
 						}
 					},
@@ -1649,6 +1719,40 @@
 				},
 				{
 					"name": "Get list of photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"albumId\", \"id\", \"title\", \"url\", \"thumbnailUrl\"],\r",
+									"        properties: {\r",
+									"            albumId: { type: \"number\" },\r",
+									"            id: { type: \"number\" },\r",
+									"            title: { type: \"string\" },\r",
+									"            url: { type: \"string\" },\r",
+									"            thumbnailUrl: { type: \"string\" }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Photos array contains 5000 items\", () => {\r",
+									"    const photos = pm.response.json();\r",
+									"    pm.expect(photos.length).to.equal(5000);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1672,13 +1776,30 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"const schema = {",
+									"    type: \"object\",",
+									"    required: [\"albumId\", \"id\", \"title\", \"url\", \"thumbnailUrl\"],",
+									"    properties: {",
+									"        albumId: { type: \"number\" },",
+									"        id: { type: \"number\" },",
+									"        title: { type: \"string\" },",
+									"        url: { type: \"string\" },",
+									"        thumbnailUrl: { type: \"string\" }",
+									"    }",
+									"};",
 									"",
-									"pm.test(\"Photo ID in response correspond to called photo id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"photoID\"));",
-									"})"
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID corresponds to photo ID\", () => {",
+									"    const photoId = pm.collectionVariables.get(\"photoId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(photoId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1686,13 +1807,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/photos/{{photoID}}",
+							"raw": "{{url}}/photos/{{photoId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"photos",
-								"{{photoID}}"
+								"{{photoId}}"
 							]
 						}
 					},
@@ -1705,13 +1826,36 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Photos showed only for specific Album ID\", function () {",
-									"    var number=pm.environment.get('number100');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].albumId).to.eql(number);",
+									"const schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"        type: \"object\",",
+									"        required: [\"albumId\", \"id\", \"title\", \"url\", \"thumbnailUrl\"],",
+									"        properties: {",
+									"            albumId: { type: \"number\" },",
+									"            id: { type: \"number\" },",
+									"            title: { type: \"string\" },",
+									"            url: { type: \"string\" },",
+									"            thumbnailUrl: { type: \"string\" }",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"ID matches requested album IDs\", () => {",
+									"    const albumId = pm.collectionVariables.get(\"albumId\");",
+									"    const photos = pm.response.json();",
+									"",
+									"    photos.forEach(photo => {",
+									"        pm.expect(photo.albumId).to.be.equal(albumId);",
+									"    })",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1719,7 +1863,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/photos/?albumId={{number100}}",
+							"raw": "{{url}}/photos/?albumId={{albumId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1730,7 +1874,7 @@
 							"query": [
 								{
 									"key": "albumId",
-									"value": "{{number100}}"
+									"value": "{{albumId}}"
 								}
 							]
 						}
@@ -1739,6 +1883,40 @@
 				},
 				{
 					"name": "Get list of comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"postId\", \"id\", \"name\", \"email\", \"body\"],\r",
+									"        properties: {\r",
+									"            postId: { type: \"number\" },\r",
+									"            id: { type: \"number\" },\r",
+									"            name: { type: \"string\" },\r",
+									"            email: { type: \"string\" },\r",
+									"            body: { type: \"string\" }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Comments array contains 500 items\", () => {\r",
+									"    const comments = pm.response.json();\r",
+									"    pm.expect(comments.length).to.be.equal(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1761,13 +1939,30 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"const schema = {",
+									"    type: \"object\",",
+									"    required: [\"postId\", \"id\", \"name\", \"email\", \"body\"],",
+									"    properties: {",
+									"        postId: { type: \"number\" },",
+									"        id: { type: \"number\" },",
+									"        name: { type: \"string\" },",
+									"        email: { type: \"string\" },",
+									"        body: { type: \"string\" }",
+									"    }",
+									"};",
 									"",
-									"pm.test(\"Comment ID in response correspond to called comment id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"commentID\"));",
-									"})"
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches comment ID from response\", () => {",
+									"    const commentId = pm.collectionVariables.get(\"commentId\");",
+									"    const comment = pm.response.json();",
+									"    pm.expect(comment.id).to.be.equal(commentId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1775,58 +1970,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/comments/{{commentID}}",
+							"raw": "{{url}}/comments/{{commentId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"comments",
-								"{{commentID}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Save email and post ID from comment request",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"//saved email as global variable from random comment ",
-									"const jsonData = pm.response.json();",
-									"pm.globals.set(\"savedEmail\", jsonData.email)",
-									"",
-									"//saved postId as global variable",
-									"pm.globals.set(\"savedPostId\", jsonData.postId)",
-									"",
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments/{{commentID}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments",
-								"{{commentID}}"
+								"{{commentId}}"
 							]
 						}
 					},
@@ -1839,13 +1989,36 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Comments reutrned only for appropriate postID\", function () {",
-									"    var number=pm.environment.get('number100');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].postId).to.eql(number);",
+									"const schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"        type: \"object\",",
+									"        required: [\"postId\", \"id\", \"name\", \"email\", \"body\"],",
+									"        properties: {",
+									"            postId: { type: \"number\" },",
+									"            id: { type: \"number\" },",
+									"            name: { type: \"string\" },",
+									"            email: { type: \"string\" },",
+									"            body: { type: \"string\" }",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches post IDs in response\", () => {",
+									"    const postId = pm.collectionVariables.get(\"postId\");",
+									"    const comments = pm.response.json();",
+									"",
+									"    comments.forEach(comment => {",
+									"        pm.expect(comment.postId).to.be.equal(postId);",
+									"    })",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1853,7 +2026,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/comments/?postId={{number100}}",
+							"raw": "{{url}}/comments/?postId={{postId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1864,7 +2037,7 @@
 							"query": [
 								{
 									"key": "postId",
-									"value": "{{number100}}"
+									"value": "{{postId}}"
 								}
 							]
 						}
@@ -1873,6 +2046,39 @@
 				},
 				{
 					"name": "Get list of posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"userId\", \"id\", \"title\", \"body\"],\r",
+									"        properties: {\r",
+									"            userId: { type: \"number\" },\r",
+									"            id: { type: \"number\" },\r",
+									"            title: { type: \"string\" },\r",
+									"            body: { type: \"string\" }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Posts array contains 100 items\", () => {\r",
+									"    const posts = pm.response.json();\r",
+									"    pm.expect(posts.length).to.be.equal(100);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1895,13 +2101,35 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Posts returned only for appropriate user ID\", function () {",
-									"    var number=pm.environment.get('number10');",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    pm.expect(jsonData[0].userId).to.eql(number);",
+									"const schema = {",
+									"    type: \"array\",",
+									"    items: {",
+									"        type: \"object\",",
+									"        required: [\"userId\", \"id\", \"title\", \"body\"],",
+									"        properties: {",
+									"            userId: { type: \"number\" },",
+									"            id: { type: \"number\" },",
+									"            title: { type: \"string\" },",
+									"            body: { type: \"string\" }",
+									"        }",
+									"    }",
+									"};",
+									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches user IDs in response\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const posts = pm.response.json();",
+									"",
+									"    posts.forEach(post => {",
+									"        pm.expect(post.userId).to.be.equal(userId);",
+									"    })",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1909,7 +2137,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/?userId={{number10}}",
+							"raw": "{{url}}/posts/?userId={{userId}}",
 							"host": [
 								"{{url}}"
 							],
@@ -1920,7 +2148,7 @@
 							"query": [
 								{
 									"key": "userId",
-									"value": "{{number10}}"
+									"value": "{{userId}}"
 								}
 							]
 						}
@@ -1936,20 +2164,37 @@
 								"exec": [
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();",
+									"const schema = {",
+									"    type: \"object\",",
+									"    required: [\"userId\", \"id\", \"title\", \"body\"],",
+									"    properties: {",
+									"        userId: { type: \"number\" },",
+									"        id: { type: \"number\" },",
+									"        title: { type: \"string\" },",
+									"        body: { type: \"string\" }",
+									"    }",
+									"};",
 									"",
-									"pm.test(\"Post ID in response correspond to called post's id\", function(){",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"postID\"));",
-									"})"
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches post ID from response\", () => {",
+									"    const postId = pm.collectionVariables.get(\"postId\");",
+									"    const post = pm.response.json();",
+									"    pm.expect(post.id).to.be.equal(postId);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -1957,13 +2202,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/{{postID}}",
+							"raw": "{{url}}/posts/{{postId}}",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"{{postID}}"
+								"{{postId}}"
 							]
 						}
 					},
@@ -1971,17 +2216,55 @@
 				},
 				{
 					"name": "All comments for specific post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"        type: \"object\",\r",
+									"        required: [\"postId\", \"id\", \"name\", \"email\", \"body\"],\r",
+									"        properties: {\r",
+									"            postId: { type: \"number\" },\r",
+									"            id: { type: \"number\" },\r",
+									"            name: { type: \"string\" },\r",
+									"            email: { type: \"string\" },\r",
+									"            body: { type: \"string\" }\r",
+									"        }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Requested ID matches post IDs in response\", () => {\r",
+									"    const postId = pm.collectionVariables.get(\"postId\");\r",
+									"    const comments = pm.response.json();\r",
+									"\r",
+									"    comments.forEach(comment => {\r",
+									"        pm.expect(comment.postId).to.be.equal(postId);\r",
+									"    })\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/posts/{{number100}}/comments",
+							"raw": "{{url}}/posts/{{postId}}/comments",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"posts",
-								"{{number100}}",
+								"{{postId}}",
 								"comments"
 							]
 						}
@@ -2531,7 +2814,27 @@
 					"pm.collectionVariables.set(\"todoId\", todoId);\r",
 					"\r",
 					"const nonExistingTodoId = getRandomInt(201, 1000);\r",
-					"pm.collectionVariables.set(\"nonExistingTodoId\", nonExistingTodoId);"
+					"pm.collectionVariables.set(\"nonExistingTodoId\", nonExistingTodoId);\r",
+					"\r",
+					"\r",
+					"// Album IDs\r",
+					"const albumId = getRandomInt(1, 100);\r",
+					"pm.collectionVariables.set(\"albumId\", albumId);\r",
+					"\r",
+					"\r",
+					"// Photo ID\r",
+					"const photoId = getRandomInt(1, 5000);\r",
+					"pm.collectionVariables.set(\"photoId\", photoId);\r",
+					"\r",
+					"\r",
+					"// Comment ID\r",
+					"const commentId = getRandomInt(1, 500);\r",
+					"pm.collectionVariables.set(\"commentId\", commentId);\r",
+					"\r",
+					"\r",
+					"// Post ID\r",
+					"const postId = getRandomInt(1, 100);\r",
+					"pm.collectionVariables.set(\"postId\", postId);"
 				]
 			}
 		},
@@ -2590,6 +2893,22 @@
 		{
 			"key": "negativeId",
 			"value": "-1"
+		},
+		{
+			"key": "albumId",
+			"value": "1"
+		},
+		{
+			"key": "photoId",
+			"value": "1"
+		},
+		{
+			"key": "commentId",
+			"value": "1"
+		},
+		{
+			"key": "postId",
+			"value": "1"
 		}
 	]
 }
