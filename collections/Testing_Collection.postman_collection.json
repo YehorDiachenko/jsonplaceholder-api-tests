@@ -2301,49 +2301,16 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "Post request",
-					"event": [
+					"name": "Negative Tests",
+					"item": [
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[{\n    \"userId\": 8,\n    \"id\": 55,\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  },\n  {\n    \"userId\": 4,\n    \"id\": 44,\n    \"title\": \"Post created by Marko\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "Post request",
-							"originalRequest": {
+							"name": "Empty body",
+							"request": {
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[{\n    \"userId\": 8,\n    \"id\": 55,\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  },\n  {\n    \"userId\": 4,\n    \"id\": 44,\n    \"title\": \"Post created by Marko\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }]",
+									"raw": "{}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2360,124 +2327,225 @@
 									]
 								}
 							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "Date",
-									"value": "Sun, 27 Mar 2022 14:51:09 GMT"
+							"response": []
+						},
+						{
+							"name": "Without title and user ID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"body\": \"{{postBody}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "334"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "X-Ratelimit-Limit",
-									"value": "1000"
-								},
-								{
-									"key": "X-Ratelimit-Remaining",
-									"value": "999"
-								},
-								{
-									"key": "X-Ratelimit-Reset",
-									"value": "1648392722"
-								},
-								{
-									"key": "Vary",
-									"value": "Origin, X-HTTP-Method-Override, Accept-Encoding"
-								},
-								{
-									"key": "Access-Control-Allow-Credentials",
-									"value": "true"
-								},
-								{
-									"key": "Cache-Control",
-									"value": "no-cache"
-								},
-								{
-									"key": "Pragma",
-									"value": "no-cache"
-								},
-								{
-									"key": "Expires",
-									"value": "-1"
-								},
-								{
-									"key": "Access-Control-Expose-Headers",
-									"value": "Location"
-								},
-								{
-									"key": "Location",
-									"value": "http://jsonplaceholder.typicode.com/posts/101"
-								},
-								{
-									"key": "X-Content-Type-Options",
-									"value": "nosniff"
-								},
-								{
-									"key": "Etag",
-									"value": "W/\"14e-1qSAuyIMsVUszVSsA4/GWV2M3bA\""
-								},
-								{
-									"key": "Via",
-									"value": "1.1 vegur"
-								},
-								{
-									"key": "CF-Cache-Status",
-									"value": "DYNAMIC"
-								},
-								{
-									"key": "Expect-CT",
-									"value": "max-age=604800, report-uri=\"https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct\""
-								},
-								{
-									"key": "Report-To",
-									"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=9%2B4FVspmc%2BOlGv1kgTaQrT5QnlsBovFCTrRptzkntuUdeHQTIZ5ysM652tgju0O6i2yahyr7ELQI8BhSI5PWkaPonsNBBxmwAG7uUY%2BeOa%2Bkmft2O%2BAB8XdC5k2isHRFwS%2Fe5gtaNZQoLhn3ymgS\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "NEL",
-									"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
-								},
-								{
-									"key": "Server",
-									"value": "cloudflare"
-								},
-								{
-									"key": "CF-RAY",
-									"value": "6f28f143da440faa-VIE"
-								},
-								{
-									"key": "alt-svc",
-									"value": "h3=\":443\"; ma=86400, h3-29=\":443\"; ma=86400"
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
 								}
-							],
-							"cookie": [],
-							"body": "{\n    \"0\": {\n        \"userId\": 8,\n        \"id\": 55,\n        \"title\": \"Post created by Nikola\",\n        \"body\": \"This is first post request on fake api server jsonplaceholder\"\n    },\n    \"1\": {\n        \"userId\": 4,\n        \"id\": 44,\n        \"title\": \"Post created by Marko\",\n        \"body\": \"This is first post request on fake api server jsonplaceholder\"\n    },\n    \"id\": 101\n}"
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid user ID format",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": {{invalidFormatId}},\r\n    \"title\": \"{{postTitle}}\",\r\n    \"body\": \"{{postBody}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Long strings and UNICODE special characters",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": {{userId}},\r\n  \"title\": \"🧪\".repeat(1000),\r\n  \"body\": \"🚨\".repeat(5000)\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empty strings and spaces",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": {{userId}},\r\n  \"title\": \"   \",\r\n  \"body\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unexpected data types",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userId\": \"{{invalidFormatId}}\",\r\n  \"title\": {{userId}},\r\n  \"body\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/posts",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"posts"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"pm.variables.set(\"skipStatus201\", true);"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								]
+							}
 						}
 					]
 				},
 				{
-					"name": "Post request with saved value",
+					"name": "Create Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const schema = {\r",
+									"    type: \"object\",\r",
+									"    required: [\"userId\", \"title\", \"body\", \"id\"],\r",
+									"    properties: {\r",
+									"        userId: { type: \"number\" },\r",
+									"        title: { type: \"string\" },\r",
+									"        body: { type: \"string\" },\r",
+									"        id: { type: \"number\" }\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID matches specified user ID\", () => {\r",
+									"    const userId = pm.collectionVariables.get(\"userId\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.userId).to.be.equal(userId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post title matches specified title\", () => {\r",
+									"    const postTitle = pm.collectionVariables.get(\"postTitle\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.title).to.be.equal(postTitle);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post body matches specified body\", () => {\r",
+									"    const postBody = pm.collectionVariables.get(\"postBody\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.body).to.be.equal(postBody);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": {{userId}},\n    \"id\": {{postID}},\n    \"title\": \"Post created by Nikola\",\n    \"body\": \"This is first post request on fake api server jsonplaceholder\"\n  }",
+							"raw": "{\n    \"userId\": {{userId}},\n    \"title\": \"{{postTitle}}\",\n    \"body\": \"{{postBody}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2495,6 +2563,32 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"if (!pm.variables.get(\"skipStatus201\")) {\r",
+							"    pm.test(\"Status code is 201\", () => {\r",
+							"        pm.response.to.have.status(201);\r",
+							"    });\r",
+							"}"
+						]
+					}
 				}
 			]
 		},
@@ -2834,7 +2928,13 @@
 					"\r",
 					"// Post ID\r",
 					"const postId = getRandomInt(1, 100);\r",
-					"pm.collectionVariables.set(\"postId\", postId);"
+					"pm.collectionVariables.set(\"postId\", postId);\r",
+					"\r",
+					"const postTitle = getRandomString(24);\r",
+					"pm.collectionVariables.set(\"postTitle\", postTitle);\r",
+					"\r",
+					"const postBody = getRandomString(128);\r",
+					"pm.collectionVariables.set(\"postBody\", postBody);"
 				]
 			}
 		},
@@ -2909,6 +3009,14 @@
 		{
 			"key": "postId",
 			"value": "1"
+		},
+		{
+			"key": "postTitle",
+			"value": ""
+		},
+		{
+			"key": "postBody",
+			"value": ""
 		}
 	]
 }
