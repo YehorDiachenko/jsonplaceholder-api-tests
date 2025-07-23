@@ -24,3 +24,9 @@ jobs:
 
     - name: Run API tests
       run: npm run api-test
+
+    - name: Upload Newman report as artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: newman-report
+            path: reports/
