@@ -12,7 +12,1167 @@
 			"name": "GET",
 			"item": [
 				{
-					"name": "Negative Tests",
+					"name": "Get list of all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"usersSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Array has 10 users\", () => {\r",
+									"    const users = pm.response.json();\r",
+									"    pm.expect(users.length).to.equal(10);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get specific user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"userSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID corresponds to user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(userId);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"todosSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has 200 items\", () => {\r",
+									"    pm.expect(pm.response.json().length).to.eql(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/todos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific todos by user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"todosSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Todos are returned only for the requested user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const todos = pm.response.json();",
+									"    ",
+									"    todos.forEach(todo => {",
+									"        pm.expect(todo.userId).to.equal(userId);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "userId",
+								"value": "5",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/?userId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific todo by todo ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"todoSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"TODO ID corresponds to the requested TODO ID\", () => {",
+									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"todoId\"));",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/todos/{{todoId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"todos",
+								"{{todoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get album list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"albumsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Albums array contains 100 items\", () => {\r",
+									"    const albums = pm.response.json();\r",
+									"    pm.expect(albums.length).to.equal(100);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/albums",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get albums by user ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"albumsSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Albums are returned only for the requested user ID\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const albums = pm.response.json();",
+									"    ",
+									"    albums.forEach(album => {",
+									"        pm.expect(album.userId).to.equal(userId);",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/albums/?userId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"albums",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific album by Album ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"albumSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID corresponds to album ID\", () => {",
+									"    const albumId = pm.collectionVariables.get(\"albumId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(albumId);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/albums/{{albumId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"albums",
+								"{{albumId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"photosSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Photos array contains 5000 items\", () => {\r",
+									"    const photos = pm.response.json();\r",
+									"    pm.expect(photos.length).to.equal(5000);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/photos/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"photos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific photo by Photo ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"photoSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID corresponds to photo ID\", () => {",
+									"    const photoId = pm.collectionVariables.get(\"photoId\");",
+									"    const responseId = pm.response.json().id;",
+									"    pm.expect(responseId).to.equal(photoId);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/photos/{{photoId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"photos",
+								"{{photoId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific photos by Album ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"photosSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"ID matches requested album IDs\", () => {",
+									"    const albumId = pm.collectionVariables.get(\"albumId\");",
+									"    const photos = pm.response.json();",
+									"",
+									"    photos.forEach(photo => {",
+									"        pm.expect(photo.albumId).to.be.equal(albumId);",
+									"    })",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/photos/?albumId={{albumId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"photos",
+								""
+							],
+							"query": [
+								{
+									"key": "albumId",
+									"value": "{{albumId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"commentsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Comments array contains 500 items\", () => {\r",
+									"    const comments = pm.response.json();\r",
+									"    pm.expect(comments.length).to.be.equal(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific comment by comment ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"commentSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches comment ID from response\", () => {",
+									"    const commentId = pm.collectionVariables.get(\"commentId\");",
+									"    const comment = pm.response.json();",
+									"    pm.expect(comment.id).to.be.equal(commentId);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments/{{commentId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments",
+								"{{commentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific comments by post ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"commentsSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches post IDs in response\", () => {",
+									"    const postId = pm.collectionVariables.get(\"postId\");",
+									"    const comments = pm.response.json();",
+									"",
+									"    comments.forEach(comment => {",
+									"        pm.expect(comment.postId).to.be.equal(postId);",
+									"    })",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/comments/?postId={{postId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"comments",
+								""
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get list of posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"postsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Posts array contains 100 items\", () => {\r",
+									"    const posts = pm.response.json();\r",
+									"    pm.expect(posts.length).to.be.equal(100);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts by specific user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"postsSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches user IDs in response\", () => {",
+									"    const userId = pm.collectionVariables.get(\"userId\");",
+									"    const posts = pm.response.json();",
+									"",
+									"    posts.forEach(post => {",
+									"        pm.expect(post.userId).to.be.equal(userId);",
+									"    })",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/?userId={{userId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific post by post ID",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {",
+									"    const schema = pm.collectionVariables.get(\"postSchema\");",
+									"    pm.response.to.have.jsonSchema(schema);",
+									"});",
+									"",
+									"pm.test(\"Requested ID matches post ID from response\", () => {",
+									"    const postId = pm.collectionVariables.get(\"postId\");",
+									"    const post = pm.response.json();",
+									"    pm.expect(post.id).to.be.equal(postId);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/{{postId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All comments for specific post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"commentsSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Requested ID matches post IDs in response\", () => {\r",
+									"    const postId = pm.collectionVariables.get(\"postId\");\r",
+									"    const comments = pm.response.json();\r",
+									"\r",
+									"    comments.forEach(comment => {\r",
+									"        pm.expect(comment.postId).to.be.equal(postId);\r",
+									"    })\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/{{postId}}/comments",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "Create Post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response matches JSON schema\", () => {\r",
+									"    const schema = pm.collectionVariables.get(\"postSchema\");\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User ID matches specified user ID\", () => {\r",
+									"    const userId = pm.collectionVariables.get(\"userId\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.userId).to.be.equal(userId);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post title matches specified title\", () => {\r",
+									"    const postTitle = pm.collectionVariables.get(\"postTitle\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.title).to.be.equal(postTitle);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Post body matches specified body\", () => {\r",
+									"    const postBody = pm.collectionVariables.get(\"postBody\");\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.body).to.be.equal(postBody);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": {{userId}},\n    \"title\": \"{{postTitle}}\",\n    \"body\": \"{{postBody}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "Update Post",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": {{userId}},\n  \"title\": \"{{postTitle}}\",\n  \"body\": \"{{postBody}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts/{{postId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "Patch post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"{{postTitle}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/posts/{{postId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "Delete a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is empty object\", () => {",
+									"    pm.expect(pm.response.json()).to.deep.equal({});",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/posts/{{postId}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"posts",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Negative Tests",
+			"item": [
+				{
+					"name": "GET",
 					"item": [
 						{
 							"name": "Get specific user",
@@ -1118,913 +2278,10 @@
 								}
 							]
 						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"packages": {},
-								"exec": [
-									"pm.variables.set(\"skipStatus200\", true);"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"packages": {},
-								"exec": [
-									"pm.test(\"Status code is 404\", () => {\r",
-									"    pm.response.to.have.status(404);\r",
-									"});"
-								]
-							}
-						}
 					]
 				},
 				{
-					"name": "Get list of all users",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"usersSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Array has 10 users\", () => {\r",
-									"    const users = pm.response.json();\r",
-									"    pm.expect(users.length).to.equal(10);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/users",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get specific user",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"userSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID corresponds to user ID\", () => {",
-									"    const userId = pm.collectionVariables.get(\"userId\");",
-									"    const responseId = pm.response.json().id;",
-									"    pm.expect(responseId).to.equal(userId);",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/users/{{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"users",
-								"{{userId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get list of todos",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"todosSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response has 200 items\", () => {\r",
-									"    pm.expect(pm.response.json().length).to.eql(200);\r",
-									"});\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/todos",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"todos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific todos by user",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"todosSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Todos are returned only for the requested user ID\", () => {",
-									"    const userId = pm.collectionVariables.get(\"userId\");",
-									"    const todos = pm.response.json();",
-									"    ",
-									"    todos.forEach(todo => {",
-									"        pm.expect(todo.userId).to.equal(userId);",
-									"    });",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "userId",
-								"value": "5",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "javascript"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/todos/?userId={{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"todos",
-								""
-							],
-							"query": [
-								{
-									"key": "userId",
-									"value": "{{userId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific todo by todo ID",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"",
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"todoSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"TODO ID corresponds to the requested TODO ID\", () => {",
-									"    pm.expect(jsonData.id).to.eql(pm.collectionVariables.get(\"todoId\"));",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "javascript"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/todos/{{todoId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"todos",
-								"{{todoId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get album list",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"albumsSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Albums array contains 100 items\", () => {\r",
-									"    const albums = pm.response.json();\r",
-									"    pm.expect(albums.length).to.equal(100);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/albums",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"albums"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get albums by user ID",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"albumsSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Albums are returned only for the requested user ID\", () => {",
-									"    const userId = pm.collectionVariables.get(\"userId\");",
-									"    const albums = pm.response.json();",
-									"    ",
-									"    albums.forEach(album => {",
-									"        pm.expect(album.userId).to.equal(userId);",
-									"    });",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/albums/?userId={{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"albums",
-								""
-							],
-							"query": [
-								{
-									"key": "userId",
-									"value": "{{userId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific album by Album ID",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"albumSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID corresponds to album ID\", () => {",
-									"    const albumId = pm.collectionVariables.get(\"albumId\");",
-									"    const responseId = pm.response.json().id;",
-									"    pm.expect(responseId).to.equal(albumId);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/albums/{{albumId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"albums",
-								"{{albumId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get list of photos",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"photosSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"})\r",
-									"\r",
-									"pm.test(\"Photos array contains 5000 items\", () => {\r",
-									"    const photos = pm.response.json();\r",
-									"    pm.expect(photos.length).to.equal(5000);\r",
-									"})"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/photos/",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"photos",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific photo by Photo ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"photoSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID corresponds to photo ID\", () => {",
-									"    const photoId = pm.collectionVariables.get(\"photoId\");",
-									"    const responseId = pm.response.json().id;",
-									"    pm.expect(responseId).to.equal(photoId);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/photos/{{photoId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"photos",
-								"{{photoId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific photos by Album ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"photosSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"ID matches requested album IDs\", () => {",
-									"    const albumId = pm.collectionVariables.get(\"albumId\");",
-									"    const photos = pm.response.json();",
-									"",
-									"    photos.forEach(photo => {",
-									"        pm.expect(photo.albumId).to.be.equal(albumId);",
-									"    })",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/photos/?albumId={{albumId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"photos",
-								""
-							],
-							"query": [
-								{
-									"key": "albumId",
-									"value": "{{albumId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get list of comments",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"commentsSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Comments array contains 500 items\", () => {\r",
-									"    const comments = pm.response.json();\r",
-									"    pm.expect(comments.length).to.be.equal(500);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific comment by comment ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"commentSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID matches comment ID from response\", () => {",
-									"    const commentId = pm.collectionVariables.get(\"commentId\");",
-									"    const comment = pm.response.json();",
-									"    pm.expect(comment.id).to.be.equal(commentId);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments/{{commentId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments",
-								"{{commentId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific comments by post ID",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"commentsSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID matches post IDs in response\", () => {",
-									"    const postId = pm.collectionVariables.get(\"postId\");",
-									"    const comments = pm.response.json();",
-									"",
-									"    comments.forEach(comment => {",
-									"        pm.expect(comment.postId).to.be.equal(postId);",
-									"    })",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/comments/?postId={{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"comments",
-								""
-							],
-							"query": [
-								{
-									"key": "postId",
-									"value": "{{postId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get list of posts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"postsSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Posts array contains 100 items\", () => {\r",
-									"    const posts = pm.response.json();\r",
-									"    pm.expect(posts.length).to.be.equal(100);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Posts by specific user",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"postsSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID matches user IDs in response\", () => {",
-									"    const userId = pm.collectionVariables.get(\"userId\");",
-									"    const posts = pm.response.json();",
-									"",
-									"    posts.forEach(post => {",
-									"        pm.expect(post.userId).to.be.equal(userId);",
-									"    })",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/?userId={{userId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								""
-							],
-							"query": [
-								{
-									"key": "userId",
-									"value": "{{userId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Specific post by post ID",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {",
-									"    const schema = pm.collectionVariables.get(\"postSchema\");",
-									"    pm.response.to.have.jsonSchema(schema);",
-									"});",
-									"",
-									"pm.test(\"Requested ID matches post ID from response\", () => {",
-									"    const postId = pm.collectionVariables.get(\"postId\");",
-									"    const post = pm.response.json();",
-									"    pm.expect(post.id).to.be.equal(postId);",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All comments for specific post",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"commentsSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Requested ID matches post IDs in response\", () => {\r",
-									"    const postId = pm.collectionVariables.get(\"postId\");\r",
-									"    const comments = pm.response.json();\r",
-									"\r",
-									"    comments.forEach(comment => {\r",
-									"        pm.expect(comment.postId).to.be.equal(postId);\r",
-									"    })\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}/comments",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}",
-								"comments"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							"if (!pm.variables.get(\"skipStatus200\")) {\r",
-							"    pm.test(\"Status code is 200\", () => {\r",
-							"        pm.response.to.have.status(200);\r",
-							"    });\r",
-							"}"
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "POST",
-			"item": [
-				{
-					"name": "Negative Tests",
+					"name": "POST",
 					"item": [
 						{
 							"name": "Empty body",
@@ -2182,311 +2439,7 @@
 							},
 							"response": []
 						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"packages": {},
-								"exec": [
-									"pm.variables.set(\"skipStatus201\", true);"
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"packages": {},
-								"exec": [
-									"pm.test(\"Status code is 400\", () => {\r",
-									"    pm.response.to.have.status(400);\r",
-									"});"
-								]
-							}
-						}
 					]
-				},
-				{
-					"name": "Create Post",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response matches JSON schema\", () => {\r",
-									"    const schema = pm.collectionVariables.get(\"postSchema\");\r",
-									"    pm.response.to.have.jsonSchema(schema);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"User ID matches specified user ID\", () => {\r",
-									"    const userId = pm.collectionVariables.get(\"userId\");\r",
-									"    const response = pm.response.json();\r",
-									"    pm.expect(response.userId).to.be.equal(userId);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Post title matches specified title\", () => {\r",
-									"    const postTitle = pm.collectionVariables.get(\"postTitle\");\r",
-									"    const response = pm.response.json();\r",
-									"    pm.expect(response.title).to.be.equal(postTitle);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Post body matches specified body\", () => {\r",
-									"    const postBody = pm.collectionVariables.get(\"postBody\");\r",
-									"    const response = pm.response.json();\r",
-									"    pm.expect(response.body).to.be.equal(postBody);\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"userId\": {{userId}},\n    \"title\": \"{{postTitle}}\",\n    \"body\": \"{{postBody}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"if (!pm.variables.get(\"skipStatus201\")) {\r",
-							"    pm.test(\"Status code is 201\", () => {\r",
-							"        pm.response.to.have.status(201);\r",
-							"    });\r",
-							"}"
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "PUT",
-			"item": [
-				{
-					"name": "Update Post",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"userId\": {{userId}},\n  \"title\": \"{{postTitle}}\",\n  \"body\": \"{{postBody}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "PATCH",
-			"item": [
-				{
-					"name": "Patch post",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"{{postTitle}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "DELETE",
-			"item": [
-				{
-					"name": "Delete a post",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response is empty object\", () => {",
-									"    pm.expect(pm.response.json()).to.deep.equal({});",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/posts/{{postId}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"posts",
-								"{{postId}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"packages": {},
-						"exec": [
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						]
-					}
 				}
 			]
 		}
