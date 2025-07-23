@@ -1,5 +1,10 @@
 {
-  "dependencies": {
-    "newman": "^6.2.1"
+  "scripts": {
+    "api-test": "node run-api-tests.js"
+  },
+  "devDependencies": {
+    "dayjs": "^1.11.13",
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
   }
 }
